@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CranioAI Dashboard</title>
+<link rel="stylesheet" href="{% static 'css/dashboardstyle.css' %}">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+
+    <div class="toggle-btn" id="toggleBtn">☰</div>
+
+    <div class="profile">
+      <div class="avatar">👤</div>
+      <h2 class="hide-on-collapse">Shree Joshi</h2>
+      <p class="hide-on-collapse">View Profile</p>
+    </div>
+
+    <div class="menu active">
+      <span class="icon">🏠</span>
+      <span class="label hide-on-collapse">Face Analyzer</span>
+    </div>
+    <div class="menu">
+      <span class="icon">🤖</span>
+      <span class="label hide-on-collapse">AI Bot</span>
+    </div>
+    <div class="menu">
+      <span class="icon">📈</span>
+      <span class="label hide-on-collapse">Progress</span>
+    </div>
+    <div class="menu">
+      <span class="icon">📅</span>
+      <span class="label hide-on-collapse">Daily Photo</span>
+    </div>
+    <div class="menu">
+      <span class="icon">📄</span>
+      <span class="label hide-on-collapse">Logs</span>
+    </div>
+
+    <div class="logout">
+      <span class="icon">🚪</span>
+      <span class="label hide-on-collapse">Logout</span>
+    </div>
+
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <nav>
+      <h1>Cranio<span>AI</span></h1>
+      <div class="icons">🔔 &nbsp;&nbsp; 👤</div>
+    </nav>
+
+    <div class="content">
+
+      <!-- Upload -->
+      <div class="card upload">
+        <h2>Upload Image</h2>
+        <p>Upload front face image for analysis</p>
+
+        <input type="file" id="fileInput" accept="image/*" hidden>
+
+        <div class="upload-box" id="uploadBox">
+          <div class="upload-placeholder" id="uploadPlaceholder">
+            <div class="cloud">☁️</div>
+            <h3>Drag &amp; Drop image here</h3>
+            <button id="chooseFileBtn">Choose File</button>
+          </div>
+
+          <div class="upload-preview" id="uploadPreview">
+            <img id="previewImg" src="" alt="Preview">
+            <p id="fileName"></p>
+            <button id="changeFileBtn">Change Image</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="card score">
+        <h2>Symmetry Score</h2>
+
+        <div class="circle" id="scoreCircle"><span id="scoreValue">--</span></div>
+
+        <h3 class="green" id="scoreLabel">Awaiting Upload</h3>
+        <p id="scoreDesc">Upload a face image to run analysis.</p>
+      </div>
+
+      <!-- 3D Face -->
+      <div class="card face big">
+        <h2>3D Face Before / After</h2>
+
+        <div class="faces">
+          <div class="face-box">
+            <div class="face-img-wrap" id="beforeWrap">
+              <div class="placeholder-icon">
+                <img = src ="{% static 'images/Before.png' %}" alt = " Before image">
+              </div>
+            </div>
+            <p>Before</p>
+          </div>
+
+          <div class="face-box" id="afterBox">
+            <div class="face-img-wrap tilt-wrap" id="afterWrap">
+              <div class="placeholder-icon">
+                <img src ="{% static 'images/After.png'%}" alt = "After image" >
+              </div>
+            </div>
+            <p>After (3D Model)</p>
+          </div>
+        </div>
+
+        <div class="status-row" id="statusRow">
+          <span class="dot"></span>
+          <span id="statusText">Waiting for image upload…</span>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="card recommend-card">
+        <h2>Recommendations</h2>
+
+        <div id="recommendList">
+          <div class="item muted">Upload a photo to get personalized exercises</div>
+        </div>
+
+        <button>View All</button>
+      </div>
+
+    </div>
+
+    <footer>©2026 CranioAI</footer>
+
+  </div>
+
+</div>
+
+<script>
+  /* Sidebar toggle */
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleBtn');
+  toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+
+  /* Elements */
+  const fileInput = document.getElementById('fileInput');
+  const uploadBox = document.getElementById('uploadBox');
+  const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+  const uploadPreview = document.getElementById('uploadPreview');
+  const previewImg = document.getElementById('previewImg');
+  const fileName = document.getElementById('fileName');
+  const chooseFileBtn = document.getElementById('chooseFileBtn');
+  const changeFileBtn = document.getElementById('changeFileBtn');
+
+  const beforeWrap = document.getElementById('beforeWrap');
+  const afterWrap = document.getElementById('afterWrap');
+  const afterBox = document.getElementById('afterBox');
+
+  const scoreCircle = document.getElementById('scoreCircle');
+  const scoreValue = document.getElementById('scoreValue');
+  const scoreLabel = document.getElementById('scoreLabel');
+  const scoreDesc = document.getElementById('scoreDesc');
+
+  const statusText = document.getElementById('statusText');
+  const recommendList = document.getElementById('recommendList');
+
+  /* Open native file explorer */
+  chooseFileBtn.addEventListener('click', () => fileInput.click());
+  changeFileBtn.addEventListener('click', () => fileInput.click());
+  uploadPlaceholder.addEventListener('click', () => fileInput.click());
+
+  /* Drag & drop support */
+  uploadBox.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadBox.classList.add('dragging');
+  });
+  uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragging'));
+  uploadBox.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadBox.classList.remove('dragging');
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) handleFile(fileInput.files[0]);
+  });
+
+  /* Exercise pool */
+  const exercisePool = [
+    { icon: "🧘", name: "Jawline Exercise" },
+    { icon: "💆", name: "Face Massage" },
+    { icon: "🙂", name: "Facial Yoga" },
+    { icon: "😮", name: "Cheek Lifts" },
+    { icon: "😙", name: "Lip Pull Stretch" },
+    { icon: "🤨", name: "Brow Raise Hold" },
+    { icon: "😬", name: "Chin Tuck Stretch" }
+  ];
+
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+
+      /* Update upload card preview */
+      previewImg.src = dataUrl;
+      fileName.textContent = file.name;
+      uploadPlaceholder.style.display = 'none';
+      uploadPreview.style.display = 'flex';
+
+      /* Show Before image immediately */
+      beforeWrap.innerHTML = `<img src="${dataUrl}" alt="Before">`;
+
+      /* Reset state and start "processing" */
+      afterWrap.innerHTML = `<div class="placeholder-icon spin">⚙️</div>`;
+      statusText.textContent = "Analyzing facial structure…";
+      scoreValue.textContent = "…";
+      scoreLabel.textContent = "Processing";
+      scoreDesc.textContent = "Running symmetry analysis on uploaded image.";
+      scoreCircle.style.background = "conic-gradient(#5b50ff 0% 100%, #e7ebf3 100% 100%)";
+      recommendList.innerHTML = `<div class="item muted">Analyzing… generating recommendations</div>`;
+
+      setTimeout(() => {
+        /* Reveal 3D model (interactive tilt card using the same image) */
+        afterWrap.innerHTML = `<img src="${dataUrl}" alt="3D Model">`;
+        statusText.textContent = "3D model generated — move mouse over image to rotate";
+
+        /* Simulated symmetry score */
+        const score = Math.floor(75 + Math.random() * 20); // 75-94%
+        animateScore(score);
+
+        /* Populate recommendations based on score */
+        const shuffled = [...exercisePool].sort(() => 0.5 - Math.random());
+        const picks = shuffled.slice(0, 3);
+        recommendList.innerHTML = picks.map(p => `<div class="item">${p.icon} ${p.name}</div>`).join('');
+      }, 1800);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function animateScore(target) {
+    let current = 0;
+    const step = () => {
+      current += 2;
+      if (current >= target) current = target;
+      scoreValue.textContent = current + "%";
+      scoreCircle.style.background = `conic-gradient(#43d879 0% ${current}%, #e7ebf3 ${current}% 100%)`;
+      if (current < target) requestAnimationFrame(step);
+      else {
+        if (target >= 85) {
+          scoreLabel.textContent = "Good Symmetry";
+          scoreDesc.textContent = "Your overall facial symmetry is good.";
+        } else if (target >= 78) {
+          scoreLabel.textContent = "Fair Symmetry";
+          scoreDesc.textContent = "Minor asymmetries detected. Exercises can help.";
+        } else {
+          scoreLabel.textContent = "Needs Improvement";
+          scoreDesc.textContent = "Noticeable asymmetry detected. Follow recommendations.";
+        }
+      }
+    };
+    step();
+  }
+
+  /* 3D tilt interaction on the After box */
+  afterBox.addEventListener('mousemove', (e) => {
+    const img = afterWrap.querySelector('img');
+    if (!img) return;
+    const rect = afterBox.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    img.style.transform = `rotateY(${x * 25}deg) rotateX(${-y * 25}deg) scale(1.05)`;
+  });
+  afterBox.addEventListener('mouseleave', () => {
+    const img = afterWrap.querySelector('img');
+    if (img) img.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+  });
+</script>
+
+</body>
+</html>
