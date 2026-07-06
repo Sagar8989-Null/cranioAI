@@ -1,0 +1,495 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CranioAI — Discover Your Best Version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/home.css' %}?v=3">
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-copy">
+        <strong>CranioAI</strong>
+        <small>3D Face Analysis</small>
+      </span>
+    </a>
+
+
+
+    <div class="nav-actions">
+      <a href="{% url 'login' %}" class="btn btn-ghost">Login</a>
+      <a href="{% url 'signup' %}" class="btn btn-solid">Get Started</a>
+    </div>
+
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== HERO (dark) ===================== -->
+<section class="hero" id="top">
+  <div class="hero-stars"></div>
+
+  <div class="hero-grid">
+
+    <div class="hero-copy">
+      <span class="eyebrow">✦ AI-Powered Facial Symmetry Analysis</span>
+      <h1>Discover Your<br><span class="grad-text">Best Version.</span></h1>
+      <p class="hero-sub">CranioAI uses advanced 3D facial analysis to evaluate symmetry, detect imbalances, and recommend personalized exercises to bring out the best in you.</p>
+
+      <div class="hero-ctas">
+        <a href="{% url 'signup' %}" class="btn btn-solid btn-lg">Analyze Your Face <span class="arrow">→</span></a>
+        <a href="#how" class="btn btn-outline btn-lg"><span class="play">▶</span> See How It Works</a>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item">
+          <span class="trust-icon">🧠</span>
+          <div><strong>AI Powered</strong><small>Accurate Analysis</small></div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🧊</span>
+          <div><strong>3D Visualization</strong><small>Realistic Results</small></div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">👤</span>
+          <div><strong>Personalized Plan</strong><small>Just For You</small></div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">📈</span>
+          <div><strong>Track Progress</strong><small>Over Time</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" id="heroVisual">
+      <div class="mesh-stage">
+        <div class="mesh-glow"></div>
+        <img class="mesh-face-img" src="{% static 'css/images/face.png' %}" alt="AI facial symmetry analysis">
+      </div>
+
+      <div class="float-card card-score">
+        <span class="fc-label">Symmetry Score</span>
+        <div class="fc-ring"><span>87%</span></div>
+        <span class="fc-tag">Good</span>
+      </div>
+
+      <div class="float-card card-balance">
+        <span class="fc-label">Left / Right Balance</span>
+        <strong class="fc-big">85%</strong>
+        <svg class="fc-spark" viewBox="0 0 100 24"><polyline points="0,18 15,10 30,14 45,6 60,12 75,4 100,8" fill="none" stroke="#a68bff" stroke-width="2"/></svg>
+      </div>
+
+      <div class="float-card card-3d">
+        <span class="fc-label">3D Face Model</span>
+        <div class="fc-cube">🧊</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== WHY CHOOSE ===================== -->
+<section class="section why" id="features">
+  <h2 class="section-title">Why Choose <span class="grad-text">CranioAI</span>?</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>Advanced AI Analysis</h3>
+      <p>Precision algorithms for accurate facial symmetry analysis.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧊</div>
+      <h3>3D Visualization</h3>
+      <p>See a detailed 3D model of your face and track improvements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <h3>Personalized Plan</h3>
+      <p>Get exercise recommendations tailored to your unique facial structure.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <h3>Track Progress</h3>
+      <p>Monitor your progress over time with detailed analytics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="section how" id="how">
+  <h2 class="section-title">How <span class="grad-text">It Works</span></h2>
+
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-icon">⬆️<span class="step-num">1</span></div>
+      <h4>Upload</h4>
+      <p>Upload a clear front face image for the best results.</p>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-icon">🧬<span class="step-num">2</span></div>
+      <h4>Analyze</h4>
+      <p>Our AI analyzes your facial structure and symmetry.</p>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-icon">🧊<span class="step-num">3</span></div>
+      <h4>Visualize</h4>
+      <p>Get a 3D model and detailed symmetry score.</p>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-icon">📅<span class="step-num">4</span></div>
+      <h4>Improve</h4>
+      <p>Follow personalized exercises to improve your symmetry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3D FACE VISUALIZATION (dark panel) ===================== -->
+<section class="section viz3d">
+  <div class="viz3d-panel">
+    <div class="viz3d-copy">
+      <h2>3D Face<br><span class="grad-text">Visualization</span></h2>
+      <p>See your face like never before with our ultra-realistic 3D modeling technology.</p>
+      <ul class="viz3d-list">
+        <li><span class="check">✓</span> 360° Interactive View</li>
+        <li><span class="check">✓</span> High Detail Accuracy</li>
+        <li><span class="check">✓</span> Realistic Depth Mapping</li>
+        <li><span class="check">✓</span> Easy Comparison</li>
+      </ul>
+    </div>
+
+    <div class="viz3d-stage">
+      <div class="viz3d-controls">
+        <button aria-label="Rotate">↻</button>
+        <button aria-label="Pan">✋</button>
+        <button aria-label="Zoom">🔍</button>
+        <button aria-label="3D">🧊</button>
+      </div>
+
+      <div class="viz3d-model">
+        <div class="viz3d-orbit"></div>
+        <div class="viz3d-glow"></div>
+        <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" class="viz3d-svg">
+          <path d="M150,20 C90,20 60,90 65,160 C68,200 80,230 100,255 L100,340 C100,355 200,355 200,340 L200,255 C220,230 235,195 232,150 C228,85 210,20 150,20 Z"
+                fill="rgba(255,255,255,0.05)" stroke="#c9befa" stroke-width="2" opacity="0.95"/>
+          <g stroke="#a78bfa" stroke-width="1" opacity="0.55">
+            <line x1="150" y1="20" x2="90" y2="120"/>
+            <line x1="90" y1="120" x2="70" y2="200"/>
+            <line x1="70" y1="200" x2="100" y2="270"/>
+            <line x1="150" y1="20" x2="200" y2="110"/>
+            <line x1="200" y1="110" x2="220" y2="190"/>
+          </g>
+          <g fill="#fff" stroke="#7c5cff" stroke-width="2">
+            <circle cx="150" cy="20" r="4"/>
+            <circle cx="90" cy="120" r="4"/>
+            <circle cx="70" cy="200" r="4"/>
+            <circle cx="100" cy="270" r="4"/>
+            <circle cx="200" cy="110" r="4"/>
+            <circle cx="220" cy="190" r="4"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="viz3d-compare">
+      <div class="compare-card">
+        <span class="compare-label">Before</span>
+        <div class="compare-face compare-before"></div>
+      </div>
+      <div class="compare-card">
+        <span class="compare-label">After (Simulated)</span>
+        <div class="compare-face compare-after"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS BANNER ===================== -->
+<section class="stats-banner">
+  <div class="stat">
+    <span class="stat-icon">👥</span>
+    <div><strong>10K+</strong><span>Happy Users</span></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">🎓</span>
+    <div><strong>95%</strong><span>Satisfaction Rate</span></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">🧩</span>
+    <div><strong>50K+</strong><span>Analyses Completed</span></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">💎</span>
+    <div><strong>4.9 ★</strong><span>Average Rating</span></div>
+  </div>
+  <div class="stats-badge">🛡️</div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="section testimonial" id="about">
+  <button class="t-arrow t-prev" id="tPrev" aria-label="Previous">‹</button>
+
+  <div class="t-card">
+    <span class="t-quote">“</span>
+    <p id="tText">CranioAI helped me understand my facial structure like never before. The exercises really made a difference!</p>
+    <div class="t-stars" id="tStars">★★★★★</div>
+    <div class="t-person">
+      <div class="t-avatar" id="tAvatar">RS</div>
+      <div>
+        <strong id="tName">Rohan Sharma</strong>
+        <small>Verified User</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-glow-face">
+    <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+      <path d="M150,20 C90,20 60,90 65,160 C68,200 80,230 100,255 L100,340 C100,355 200,355 200,340 L200,255 C220,230 235,195 232,150 C228,85 210,20 150,20 Z"
+            fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.7"/>
+      <g fill="#a78bfa" opacity="0.8">
+        <circle cx="150" cy="20" r="3"/>
+        <circle cx="90" cy="120" r="3"/>
+        <circle cx="70" cy="200" r="3"/>
+        <circle cx="100" cy="270" r="3"/>
+        <circle cx="200" cy="110" r="3"/>
+        <circle cx="220" cy="190" r="3"/>
+      </g>
+    </svg>
+  </div>
+
+  <button class="t-arrow t-next" id="tNext" aria-label="Next">›</button>
+
+  <div class="t-dots" id="tDots"></div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta-banner" id="contact">
+  <div class="cta-left">
+    <span class="cta-icon">🧊</span>
+    <div>
+      <h3>Ready to Discover a Better You?</h3>
+      <p>Start your journey towards perfect facial symmetry today.</p>
+    </div>
+  </div>
+  <a href="{% url 'signup' %}" class="btn btn-solid btn-lg">Get Started Now <span class="arrow">→</span></a>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand">
+        <span class="brand-mark">◈</span>
+        <span class="brand-copy"><strong>CranioAI</strong><small>3D Face Analysis</small></span>
+      </div>
+      <p>AI-powered 3D facial analysis platform to help you understand and enhance your natural facial symmetry.</p>
+      <div class="footer-social">
+        <span>📷</span><span>🐦</span><span>▶️</span><span>💼</span>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#">Pricing</a>
+      <a href="#">FAQ</a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="#">Help Center</a>
+      <a href="#">Guides</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <div class="footer-col newsletter">
+      <h5>Stay Updated</h5>
+      <p>Get the latest updates and tips on facial symmetry and wellness.</p>
+      <form class="footer-form" onsubmit="return false;">
+        <input type="email" placeholder="Enter your email">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© 2026 CranioAI. All rights reserved.</div>
+</footer>
+
+<!-- ===================== AI CHATBOT WIDGET ===================== -->
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <span class="chat-bot-avatar">🤖</span>
+        <div>
+          <strong>CranioAI Assistant</strong>
+          <small>Online • Ask me anything</small>
+        </div>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg msg-bot">Hi 👋 I'm your CranioAI assistant. Ask me about symmetry scores, exercises, or how to get started!</div>
+    </div>
+
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Type your message...">
+      <button id="chatSend" aria-label="Send message">➤</button>
+    </div>
+  </div>
+
+  <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
+    <span class="chat-toggle-icon">🤖</span>
+    <span class="chat-ping"></span>
+  </button>
+</div>
+
+<script>
+  /* Mobile nav */
+  const navBurger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+  navBurger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    navBurger.classList.toggle('open');
+  });
+
+  /* Sticky nav shadow on scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* Hero mesh parallax tilt */
+  const heroVisual = document.getElementById('heroVisual');
+  const meshStage = heroVisual.querySelector('.mesh-stage');
+  heroVisual.addEventListener('mousemove', (e) => {
+    const rect = heroVisual.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    meshStage.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+  });
+  heroVisual.addEventListener('mouseleave', () => {
+    meshStage.style.transform = `rotateY(0deg) rotateX(0deg)`;
+  });
+
+  /* Testimonial carousel */
+  const testimonials = [
+    { text: "CranioAI helped me understand my facial structure like never before. The exercises really made a difference!", name: "Rohan Sharma", initials: "RS", stars: 5 },
+    { text: "The 3D visualization is incredible — I could actually see my progress week by week. Highly recommend.", name: "Ananya Verma", initials: "AV", stars: 5 },
+    { text: "Simple, precise, and the personalized exercises actually work. My symmetry score improved in a month.", name: "Kabir Mehta", initials: "KM", stars: 4 }
+  ];
+  let tIndex = 0;
+  const tText = document.getElementById('tText');
+  const tName = document.getElementById('tName');
+  const tAvatar = document.getElementById('tAvatar');
+  const tStars = document.getElementById('tStars');
+  const tDots = document.getElementById('tDots');
+
+  function renderDots() {
+    tDots.innerHTML = testimonials.map((_, i) => `<span class="t-dot ${i === tIndex ? 'active' : ''}"></span>`).join('');
+  }
+  function renderTestimonial() {
+    const t = testimonials[tIndex];
+    tText.textContent = t.text;
+    tName.textContent = t.name;
+    tAvatar.textContent = t.initials;
+    tStars.textContent = '★'.repeat(t.stars) + '☆'.repeat(5 - t.stars);
+    renderDots();
+  }
+  document.getElementById('tPrev').addEventListener('click', () => {
+    tIndex = (tIndex - 1 + testimonials.length) % testimonials.length;
+    renderTestimonial();
+  });
+  document.getElementById('tNext').addEventListener('click', () => {
+    tIndex = (tIndex + 1) % testimonials.length;
+    renderTestimonial();
+  });
+  renderTestimonial();
+
+  /* ===================== Chatbot widget ===================== */
+  const chatWidget = document.getElementById('chatWidget');
+  const chatPanel = document.getElementById('chatPanel');
+  const chatToggle = document.getElementById('chatToggle');
+  const chatClose = document.getElementById('chatClose');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+
+  function openChat(){
+    chatPanel.classList.add('open');
+    chatToggle.classList.add('hide');
+    chatInput.focus();
+  }
+  function closeChat(){
+    chatPanel.classList.remove('open');
+    chatToggle.classList.remove('hide');
+  }
+
+  chatToggle.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+
+  function addMessage(text, sender){
+    const div = document.createElement('div');
+    div.className = `msg msg-${sender}`;
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function botReply(userText){
+    const t = userText.toLowerCase();
+    let reply = "Thanks for reaching out! Our team can walk you through this in detail — try the 'Analyze Your Face' button to get started.";
+    if (t.includes('score') || t.includes('symmetry')) {
+      reply = "Your symmetry score is calculated from facial landmarks across eyes, nose, mouth, and jawline. Upload a clear front photo to get yours!";
+    } else if (t.includes('exercise')) {
+      reply = "Based on your analysis, we recommend targeted facial exercises to improve balance in the areas that need it most.";
+    } else if (t.includes('price') || t.includes('cost') || t.includes('plan')) {
+      reply = "Basic analysis is free to try! Check the Pricing section in the footer for premium plans.";
+    } else if (t.includes('privacy') || t.includes('data') || t.includes('safe')) {
+      reply = "Your photos and data are kept 100% private and secure — we never share them with third parties.";
+    } else if (t.includes('hi') || t.includes('hello') || t.includes('hey')) {
+      reply = "Hey there! 👋 Ready to discover your best version? You can start by uploading a photo.";
+    }
+    setTimeout(() => addMessage(reply, 'bot'), 600);
+  }
+
+  function sendMessage(){
+    const val = chatInput.value.trim();
+    if (!val) return;
+    addMessage(val, 'user');
+    chatInput.value = '';
+    botReply(val);
+  }
+
+  chatSend.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+</script>
+
+</body>
+</html>

@@ -4,6 +4,12 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 
 
+# HOME PAGE
+def home(request):
+    return render(request, "pages/home.html")
+
+
+# SIGNUP PAGE
 def signup(request):
 
     if request.method == "POST":
@@ -17,14 +23,19 @@ def signup(request):
             email=email,
             password=password
         )
+
         user.save()
 
         return redirect("login")
 
-    return render(request, "pages/signup.html")
+    return render(
+        request,
+        "pages/signup.html"
+    )
 
 
-def login(request):
+# LOGIN PAGE
+def login_view(request):
 
     if request.method == "POST":
 
@@ -35,6 +46,7 @@ def login(request):
             email=email
         ).first()
 
+
         if user_obj is not None:
 
             user = authenticate(
@@ -43,6 +55,7 @@ def login(request):
                 password=password
             )
 
+
             if user is not None:
 
                 auth_login(
@@ -50,19 +63,25 @@ def login(request):
                     user
                 )
 
-                return redirect("dashboard")
+                return redirect(
+                    "dashboard"
+                )
 
             else:
+
                 messages.error(
                     request,
                     "Wrong password"
                 )
 
+
         else:
+
             messages.error(
                 request,
                 "Email not found"
             )
+
 
     return render(
         request,
@@ -70,6 +89,7 @@ def login(request):
     )
 
 
+# DASHBOARD PAGE
 def dashboard(request):
 
     return render(
