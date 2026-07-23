@@ -1,44 +1,5 @@
-# Python
-__pycache__/
-*.py[cod]
-
 # Virtual Environments
 venv/
 ENV/
 env/
 .venv/
-
-# Django Database
-db.sqlite3
-*.sqlite3
-
-# Environment Variables
-.env
-
-# IDE
-.vscode/
-.idea/
-
-# Media
-Backend/media/uploads/
-Backend/media/generated_images/
-Backend/media/generated_models/
-
-# 3D Models
-*.glb
-*.gltf
-
-#images
-.png
-.jpeg
-
-# 3D Files
-*.glb
-*.gltf
-
-# Logs
-*.log
-
-# OS Files
-.DS_Store
-Thumbs.db
