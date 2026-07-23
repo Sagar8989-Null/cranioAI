@@ -3,10 +3,12 @@ import { useFrame } from "@react-three/fiber"
 import { useGLTF, OrbitControls, Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
+import * as Three from "three"
 
-function Model() {
+function Model({modelUrl,scale,position,rotation}) {
+
   const group = useRef();
-  const { scene } = useGLTF("/models/face.glb");
+  const { scene } = useGLTF(modelUrl);
 
   useFrame((_, delta) => {
     group.current.rotation.y += delta * 0.5
@@ -28,16 +30,32 @@ function Model() {
       <Center>
         <primitive
           object={scene}
-          scale={0.2}
-          position={[0, 5, 0]}
-          rotation={[0, Math.PI, 0]}
+          scale={scale}
+          position={position}
+          rotation={rotation}
         />
       </Center>
     </group>
   );
 }
 
-export default function FaceModel() {
+export default function FaceModel({ modelUrl, config = {} }) {
+
+  const {
+    scale = 0.2,
+    position = [0, 5, 0],
+    rotation = [0, Math.PI, 0],
+    cameraPosition = [0, 0, 100],
+    minDistance = 100,
+    maxDistance = 200,
+    autoRotate = false,
+    autoRotateSpeed = 1,
+  } = config;
+
+  if (!modelUrl) {
+    return <h3> No Model Generated Yet </h3>
+  }
+
   return (
     <Canvas
       shadows
@@ -67,17 +85,18 @@ export default function FaceModel() {
 
       <Environment preset="sunset" />
 
-      <Model />
+      <Model modelUrl={modelUrl}
+        scale={scale}
+        position={position}
+        rotation={rotation} />
 
       <OrbitControls
-        enableZoom={true}
+        enableZoom
         enablePan={false}
-        autoRotate={false}
-        // autoRotateSpeed={1}
-        minDistance={100}
-        maxDistance={200}
-        minPolarAngle={0}
-        // maxPolarAngle={Math.PI / 2}
+        autoRotate={autoRotate}
+        autoRotateSpeed={autoRotateSpeed}
+        minDistance={minDistance}
+        maxDistance={maxDistance}
         maxPolarAngle={2.1}
       />
     </Canvas>

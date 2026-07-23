@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './Visualization.css'
+import FaceModel from "../../components/FaceModel";
 
 function HeadMesh() {
   const meshRef = useRef(null)
@@ -63,10 +64,12 @@ export default function Visualization() {
     window.location.reload()
   }
 
+  const glb_url = localStorage.getItem("glb_url")
+
   return (
     <div className="viz-page">
       <div className="viz-canvas-wrap">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        {/* <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />
@@ -79,7 +82,28 @@ export default function Visualization() {
             maxDistance={10}
             enableZoom={true}
           />
-        </Canvas>
+        </Canvas> */}
+        {/* <FaceModel modelUrl={"/models/face.glb"} /> */}
+        {glb_url?<FaceModel modelUrl={glb_url} config={{
+                            scale: 35,
+                            cameraPosition: [0, 0, 5],
+                            minDistance: 30,
+                            maxDistance: 60,
+                            position: [0, 0, 0],
+                          }} /> : <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />
+          <HeadMesh />
+          <InnerHead />
+          <LandmarkDots />
+          <OrbitControls
+            enablePan={false}
+            minDistance={3}
+            maxDistance={10}
+            enableZoom={true}
+          />
+        </Canvas>}
 
         <div className="viz-controls">
           <button className="viz-control-btn" title="Rotate">

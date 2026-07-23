@@ -20,9 +20,9 @@ db.sqlite3
 .idea/
 
 # Media
-Backend/media/uploads/
-Backend/media/generated_images/
-Backend/media/generated_models/
+media/uploads/
+media/generated_images/
+media/generated_models/
 
 # 3D Models
 *.glb

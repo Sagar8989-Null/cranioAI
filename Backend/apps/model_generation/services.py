@@ -13,9 +13,16 @@ class FaceModelGenerator:
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(
             static_image_mode=True,
             max_num_faces=1,
-            refine_landmarks=True,
+            refine_landmarks=False,
             min_detection_confidence=0.5
         )
+        
+        self.canonical = trimesh.load(
+            "media/models/canonical_face_model.obj",
+            process=False
+        )
+        
+        self.faces = self.canonical.faces
 
     def generate(self, image_path):
 
@@ -37,32 +44,52 @@ class FaceModelGenerator:
         face_landmarks = (
             results.multi_face_landmarks[0]
         )
-
+        
         h, w, _ = image.shape
 
         vertices = []
 
         for lm in face_landmarks.landmark:
 
-            x = lm.x * w
-            y = (1.0 - lm.y) * h
+            # x = lm.x * w
+            # y = (1.0 - lm.y) * h
 
-            # mediapipe z depth
-            z = lm.z * w
+            # # mediapipe z depth
+            # z = lm.z * w
+            
+            x = (lm.x-0.5)
+            y = -(lm.y-0.5)
+            z = lm.z
 
             vertices.append([x, y, z])
 
-        vertices = np.array(vertices)
+        vertices = np.array(vertices, dtype=np.float32)
 
-        faces = np.array(
-            list(mp.solutions.face_mesh.FACEMESH_TESSELATION)
-        )
+        # faces = np.array(
+        #     list(mp.solutions.face_mesh.FACEMESH_TESSELATION)
+        # )
+        
+        faces = self.faces
+        faces = np.flip(faces, axis=1)
+        
+        pc = trimesh.points.PointCloud(vertices)
+        pc.export("landmarks.ply")
+        
+        
+        print(faces.shape)
+        print(vertices.shape)
+        print(self.faces.shape)
+        print(self.faces.max())
+        print(self.faces[:10])
 
         mesh = trimesh.Trimesh(
             vertices=vertices,
             faces=faces,
             process=False
+            # process=True
         )
+        
+        mesh.fix_normals()
 
         os.makedirs(
             "media/generated_models",

@@ -232,7 +232,7 @@ export default function Home() {
             <div className="home-viz-face">
               <div className="home-viz-center">
                 <div className="home-viz-face">
-                  <FaceModel />
+                  <FaceModel modelUrl={"/models/face.glb"}/>
                 </div>
               </div>
             </div>

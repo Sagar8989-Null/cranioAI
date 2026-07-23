@@ -79,7 +79,7 @@ export default function DashboardLayout() {
           </div>
 
           <div className="dash-user-profile">
-            <div className="dash-avatar">SJ</div>
+            <div className="dash-avatar">{user.username.slice(0,1)}</div>
             <div className="dash-user-info">
               <div className="dash-user-name">{user.username}</div>
               <div className="dash-user-badge">Premium</div>

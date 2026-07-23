@@ -64,6 +64,6 @@ class AnalyzeAndGenerateAPIView(APIView):
             }
         }
 
-        print(response_data)
+        # print(response_data)
 
         return Response(response_data)
