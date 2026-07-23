@@ -42,7 +42,7 @@ class AnalyzeAndGenerateAPIView(APIView):
         
         try:
             symmetry_result = service.analyze(image_path)
-            model_result = generator_service.generate(image_path)
+            model_result = generator_service.generate_face_model(image_path)
         except Exception as e:
             traceback.print_exc()
             return Response(

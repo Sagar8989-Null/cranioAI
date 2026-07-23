@@ -69,28 +69,8 @@ export default function Visualization() {
   return (
     <div className="viz-page">
       <div className="viz-canvas-wrap">
-        {/* <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />
-          <HeadMesh />
-          <InnerHead />
-          <LandmarkDots />
-          <OrbitControls
-            enablePan={false}
-            minDistance={3}
-            maxDistance={10}
-            enableZoom={true}
-          />
-        </Canvas> */}
-        {/* <FaceModel modelUrl={"/models/face.glb"} /> */}
-        {glb_url?<FaceModel modelUrl={glb_url} config={{
-                            scale: 35,
-                            cameraPosition: [0, 0, 5],
-                            minDistance: 30,
-                            maxDistance: 60,
-                            position: [0, 0, 0],
-                          }} /> : <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        
+        {glb_url?<FaceModel modelUrl={glb_url} /> : <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />

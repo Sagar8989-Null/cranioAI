@@ -298,13 +298,7 @@ export default function Dashboard() {
             <div className="dash-ba-face">
               {
                 modelUrl ?
-                  <FaceModel modelUrl={modelUrl} config={{
-                    scale: 35,
-                    cameraPosition: [0, 0, 50],
-                    minDistance: 30,
-                    maxDistance: 100,
-                    position: [0, 0, 0],
-                  }} /> : <p>No 3D Model Yet</p>}
+                  <FaceModel modelUrl={modelUrl} /> : <p>No 3D Model Yet</p>}
             </div>
             <div className="dash-ba-info">
               <p>Improvement over 30 days of exercises:</p>

@@ -1,92 +1,56 @@
-import cv2
-import mediapipe as mp
-import numpy as np
-import trimesh
 import os
 import uuid
+import requests
+import trimesh
+from django.conf import settings
 
 
 class FaceModelGenerator:
 
-    def __init__(self):
+    @staticmethod
+    def generate_face_model(image_path):
 
-        self.face_mesh = mp.solutions.face_mesh.FaceMesh(
-            static_image_mode=True,
-            max_num_faces=1,
-            refine_landmarks=False,
-            min_detection_confidence=0.5
-        )
-        
-        self.canonical = trimesh.load(
-            "media/models/canonical_face_model.obj",
-            process=False
-        )
-        
-        self.faces = self.canonical.faces
+        FASTAPI_URL = "http://127.0.0.1:8001/generate"
 
-    def generate(self, image_path):
+        with open(image_path, "rb") as image:
+            response = requests.post(
+                FASTAPI_URL,
+                files={"file": image},
+                timeout=300,
+            )
 
-        image = cv2.imread(image_path)
+        response.raise_for_status()
 
-        if image is None:
-            raise ValueError("Could not load image")
+        obj_filename = f"{uuid.uuid4()}.obj"
 
-        rgb = cv2.cvtColor(
-            image,
-            cv2.COLOR_BGR2RGB
+        obj_path = os.path.join(
+            settings.MEDIA_ROOT,
+            "generated_models",
+            obj_filename,
         )
 
-        results = self.face_mesh.process(rgb)
+        os.makedirs(os.path.dirname(obj_path), exist_ok=True)
 
-        if not results.multi_face_landmarks:
-            raise ValueError("No face detected")
+        with open(obj_path, "wb") as f:
+            f.write(response.content)
 
-        face_landmarks = (
-            results.multi_face_landmarks[0]
-        )
-        
-        h, w, _ = image.shape
+        # Convert OBJ → GLB
+        mesh = trimesh.load(obj_path, force="mesh")
 
-        vertices = []
+        glb_filename = f"{uuid.uuid4()}.glb"
 
-        for lm in face_landmarks.landmark:
-
-            x = (lm.x-0.5)
-            y = -(lm.y-0.5)
-            z = lm.z
-
-            vertices.append([x, y, z])
-
-        vertices = np.array(vertices, dtype=np.float32)
-
-        
-        faces = self.faces
-        faces = np.flip(faces, axis=1)
-        
-        mesh = trimesh.Trimesh(
-            vertices=vertices,
-            faces=faces,
-            process=False
-            # process=True
-        )
-        
-        mesh.fix_normals()
-
-        os.makedirs(
-            "media/generated_models",
-            exist_ok=True
-        )
-
-        file_id = str(uuid.uuid4())
-
-        glb_path = (
-            f"media/generated_models/{file_id}.glb"
+        glb_path = os.path.join(
+            settings.MEDIA_ROOT,
+            "generated_models",
+            glb_filename,
         )
 
         mesh.export(glb_path)
 
+        # Optional: remove OBJ if you don't need it
+        os.remove(obj_path)
+
         return {
-            "model_path": glb_path,
-            "vertices": len(vertices),
-            "faces": len(faces)
+            "success": True,
+            "model_path": f"media/generated_models/{glb_filename}"
         }

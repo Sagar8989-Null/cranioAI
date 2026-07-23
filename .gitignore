@@ -3,5 +3,3 @@ venv/
 ENV/
 env/
 .venv/
-
-glb-test/

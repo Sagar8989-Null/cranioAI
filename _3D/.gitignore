@@ -1,0 +1,14 @@
+__pycache__/
+# FUKA/
+
+FUKA/*
+!FUKA/.gitkeep
+
+temp_arcface/*
+!temp_arcface/.gitkeep
+
+uploads/*
+!uploads/.gitkeep
+
+outputs/*
+!outputs/.gitkeep
