@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import './Dashboard.css'
+import { useNavigate } from "react-router-dom";
 
 const topStats = [
   { label: 'Overall Symmetry', value: '87%', icon: 'symmetry', trend: '+3% this month' },
@@ -50,6 +51,19 @@ export default function Dashboard() {
   const score = 87
   const circumference = 2 * Math.PI * 52
   const offset = circumference - (score / 100) * circumference
+  const navigate = useNavigate();
+
+
+      useEffect(() => {
+      const token =
+        localStorage.getItem("access") ||
+        sessionStorage.getItem("access");
+
+      if (!token) {
+        navigate("/login");
+      }
+    }, [navigate]);
+
 
   return (
     <div className="dash-page">

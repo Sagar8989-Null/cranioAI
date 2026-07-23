@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import './Signup.css'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Signup() {
 
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
@@ -89,11 +92,45 @@ export default function Signup() {
             </div>
             <div className="signup-field">
               <label>Password</label>
-              <input type="password" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required />
+              <div className="password-input">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Create a Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+                <span
+                  className='toggle-password'
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+
+                </span>
+              </div>
             </div>
             <div className="signup-field">
               <label>Confirm Password</label>
-              <input type="password" name="confirm" placeholder="Re-enter password" value={form.confirm} onChange={handleChange} required />
+              <div className= "password-input">
+                <input
+                type={showConfirmPassword ? "text":"password"}
+                name="confirm"
+                placeholder = "ConfirmPassword"
+                value={form.confirm}
+                onChange={handleChange}
+                required
+                />
+                <span
+                className='toggle-password'
+                  onClick={()=> setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+
+                </span>
+
+
+              </div>
             </div>
             <label className="signup-terms">
               <input type="checkbox" required /> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
