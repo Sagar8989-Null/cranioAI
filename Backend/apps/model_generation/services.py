@@ -51,12 +51,6 @@ class FaceModelGenerator:
 
         for lm in face_landmarks.landmark:
 
-            # x = lm.x * w
-            # y = (1.0 - lm.y) * h
-
-            # # mediapipe z depth
-            # z = lm.z * w
-            
             x = (lm.x-0.5)
             y = -(lm.y-0.5)
             z = lm.z
@@ -65,23 +59,10 @@ class FaceModelGenerator:
 
         vertices = np.array(vertices, dtype=np.float32)
 
-        # faces = np.array(
-        #     list(mp.solutions.face_mesh.FACEMESH_TESSELATION)
-        # )
         
         faces = self.faces
         faces = np.flip(faces, axis=1)
         
-        pc = trimesh.points.PointCloud(vertices)
-        pc.export("landmarks.ply")
-        
-        
-        print(faces.shape)
-        print(vertices.shape)
-        print(self.faces.shape)
-        print(self.faces.max())
-        print(self.faces[:10])
-
         mesh = trimesh.Trimesh(
             vertices=vertices,
             faces=faces,
