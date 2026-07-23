@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent
 UPLOAD_DIR = BASE_DIR / "uploads"
 OUTPUT_DIR = BASE_DIR / "outputs"
 ARCFACE_DIR = BASE_DIR / "temp_arcface"
-FUKA_DIR = BASE_DIR / "MICA"
+FUKA_DIR = BASE_DIR / "FUKA"
 
 UPLOAD_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
