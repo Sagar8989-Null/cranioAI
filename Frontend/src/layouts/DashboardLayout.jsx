@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import './DashboardLayout.css'
+import { useNavigate } from "react-router-dom";
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid', end: true },
@@ -40,6 +41,19 @@ export default function DashboardLayout() {
   const title = pageTitles[location.pathname] || 'Dashboard'
   
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+
+    sessionStorage.removeItem("access");
+    sessionStorage.removeItem("refresh");
+
+    navigate("/login");
+  };
+
 
   return (
     <div className="dash-layout">
@@ -108,6 +122,7 @@ export default function DashboardLayout() {
               <div className="dash-avatar sm">{user.username.slice(0,1)}</div>
               <span className="dash-topbar-name">{user.username}</span>
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
+            <div className= "logout" onClick={handleLogout}>Logout</div>
             </div>
           </div>
         </header>
