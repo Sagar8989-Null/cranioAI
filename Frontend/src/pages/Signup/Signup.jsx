@@ -4,6 +4,7 @@ import './Signup.css'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import loginBg from "../../assets/login-bg.png";
 
 export default function Signup() {
 
@@ -52,29 +53,52 @@ export default function Signup() {
   return (
     <div className="signup-page">
       <div className="signup-left">
-        <Link to="/" className="signup-brand">
-          <div className="signup-brand-logo">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a9 9 0 0 1 0 18M12 3a9 9 0 0 0 0 18" />
-            </svg>
-          </div>
-          <span>CranioAI</span>
-        </Link>
-        <div className="signup-illustration">
-          <svg viewBox="0 0 200 240" width="200" height="240">
-            <ellipse cx="100" cy="120" rx="70" ry="100" fill="none" stroke="rgba(108,240,174,0.5)" strokeWidth="1.5" />
-            <ellipse cx="100" cy="120" rx="55" ry="85" fill="none" stroke="rgba(108,240,174,0.35)" strokeWidth="1" />
-            <ellipse cx="100" cy="120" rx="40" ry="65" fill="none" stroke="rgba(108,240,174,0.25)" strokeWidth="1" />
-            <line x1="100" y1="20" x2="100" y2="220" stroke="rgba(108,240,174,0.5)" strokeWidth="1" strokeDasharray="4 4" />
-            <circle cx="80" cy="95" r="6" fill="rgba(108,240,174,0.7)" />
-            <circle cx="120" cy="95" r="6" fill="rgba(108,240,174,0.7)" />
-            <path d="M 90 140 Q 100 150 110 140" fill="none" stroke="rgba(108,240,174,0.7)" strokeWidth="2" />
-            <path d="M 85 165 Q 100 175 115 165" fill="none" stroke="rgba(108,240,174,0.7)" strokeWidth="2" />
-          </svg>
+        <img
+          src={loginBg}
+          alt="Signup Background"
+          className="signup-bg-image"
+        />
+
+        <div className="hero-logo">
+          <h2>Cranio<span>AI</span></h2>
         </div>
-        <h2 className="signup-tagline">Start Your Symmetry Journey</h2>
-        <p className="signup-subtext">Join thousands analyzing their facial symmetry with AI</p>
+
+        <div className="hero-content">
+
+          <div className="ai-badge">
+            AI-POWERED
+          </div>
+
+          <h1 className="hero-title">
+            Precision.<br />
+            <span>Symmetry.</span><br />
+            Perfection.
+          </h1>
+
+          <div className="hero-line"></div>
+
+          <p className="hero-description">
+            Advanced 3D facial analysis technology
+            <br />
+            for accurate insights and better outcomes.
+          </p>
+
+        </div>
+
+
+        <div className="feature-box">
+          <div className="feature">
+            <h4>Secure & Private</h4>
+          </div>
+        </div>
+
+        <div className="trusted">
+          🛡 Trusted by professionals. Built for accuracy.
+        </div>
+
       </div>
+
+
 
       <div className="signup-right">
         <div className="signup-form-wrap">
@@ -112,19 +136,19 @@ export default function Signup() {
             </div>
             <div className="signup-field">
               <label>Confirm Password</label>
-              <div className= "password-input">
+              <div className="password-input">
                 <input
-                type={showConfirmPassword ? "text":"password"}
-                name="confirm"
-                placeholder = "ConfirmPassword"
-                value={form.confirm}
-                onChange={handleChange}
-                required
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirm"
+                  placeholder="ConfirmPassword"
+                  value={form.confirm}
+                  onChange={handleChange}
+                  required
                 />
                 <span
-                className='toggle-password'
-                  onClick={()=> setShowConfirmPassword(!showConfirmPassword)}
-                  >
+                  className='toggle-password'
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
 
                 </span>
