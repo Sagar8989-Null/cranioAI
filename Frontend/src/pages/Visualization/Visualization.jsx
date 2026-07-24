@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef,useState,useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './Visualization.css'
@@ -60,37 +60,42 @@ const metrics = [
 ]
 
 export default function Visualization() {
+  
+  const [analysis, setAnalysis] = useState(null);
+
   const handleReset = () => {
     window.location.reload()
   }
 
   const glb_url = localStorage.getItem("glb_url")
 
+  useEffect(() => {
+      const savedAnalysis = localStorage.getItem("analysis");
+  
+      if (savedAnalysis) {
+        setAnalysis(JSON.parse(savedAnalysis));
+      }
+    }, []);
+
+  const metrics = analysis
+    ? Object.entries(analysis.symmetry_analysis.region_scores).map(
+      ([key, value]) => ({
+        label: key.charAt(0).toUpperCase() + key.slice(1),
+        value,
+      })
+    )
+    : [];
+
   return (
     <div className="viz-page">
       <div className="viz-canvas-wrap">
-        {/* <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />
-          <HeadMesh />
-          <InnerHead />
-          <LandmarkDots />
-          <OrbitControls
-            enablePan={false}
-            minDistance={3}
-            maxDistance={10}
-            enableZoom={true}
-          />
-        </Canvas> */}
-        {/* <FaceModel modelUrl={"/models/face.glb"} /> */}
-        {glb_url?<FaceModel modelUrl={glb_url} config={{
-                            scale: 35,
-                            cameraPosition: [0, 0, 5],
-                            minDistance: 30,
-                            maxDistance: 60,
-                            position: [0, 0, 0],
-                          }} /> : <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        {glb_url ? <FaceModel modelUrl={glb_url} config={{
+          scale: 35,
+          cameraPosition: [0, 0, 5],
+          minDistance: 30,
+          maxDistance: 60,
+          position: [0, 0, 0],
+        }} /> : <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <pointLight position={[-10, -10, -10]} intensity={0.5} color="#69F0AE" />
@@ -108,22 +113,22 @@ export default function Visualization() {
         <div className="viz-controls">
           <button className="viz-control-btn" title="Rotate">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8M21 3v5h-5"/>
+              <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8M21 3v5h-5" />
             </svg>
           </button>
           <button className="viz-control-btn" title="Zoom In">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3M11 8v6M8 11h6" />
             </svg>
           </button>
           <button className="viz-control-btn" title="Zoom Out">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3M8 11h6"/>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3M8 11h6" />
             </svg>
           </button>
           <button className="viz-control-btn" title="Reset" onClick={handleReset}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12a9 9 0 1 0 9-9M3 12l4-4M3 12l4 4"/>
+              <path d="M3 12a9 9 0 1 0 9-9M3 12l4-4M3 12l4 4" />
             </svg>
           </button>
         </div>
@@ -145,7 +150,7 @@ export default function Visualization() {
           {metrics.map((m) => (
             <div className="viz-metric" key={m.label}>
               <span className="viz-metric-label">{m.label}</span>
-              <span className="viz-metric-value">{m.value}</span>
+              <span className="viz-metric-value">{m.value}%</span>
             </div>
           ))}
         </div>
@@ -167,7 +172,7 @@ export default function Visualization() {
 
         <button className="viz-export-btn">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
           </svg>
           Export 3D Model
         </button>

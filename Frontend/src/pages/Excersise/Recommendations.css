@@ -1,0 +1,210 @@
+.rec-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rec-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.rec-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.rec-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Tabs ---------- */
+.rec-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  border: 1px solid var(--border-light);
+}
+
+.rec-tab {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+
+.rec-tab.active {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.rec-tab:hover:not(.active) { background: var(--primary-pale); }
+
+/* ---------- Grid ---------- */
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.rec-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.rec-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.rec-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.rec-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--primary-pale);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rec-difficulty {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.rec-difficulty.easy {
+  color: var(--success);
+  background: var(--primary-pale);
+}
+
+.rec-difficulty.medium {
+  color: var(--warning);
+  background: rgba(255, 179, 0, 0.1);
+}
+
+.rec-difficulty.hard {
+  color: var(--error);
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.rec-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.rec-card-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.rec-card-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-main);
+}
+
+.rec-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.rec-meta-item svg { color: var(--primary); }
+
+.rec-start-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform var(--transition);
+}
+
+.rec-start-btn:hover { transform: translateY(-1px); }
+
+/* ---------- Tip Card ---------- */
+.rec-tip-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: linear-gradient(135deg, var(--primary-pale), var(--bg-white));
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.rec-tip-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rec-tip-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.rec-tip-card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .rec-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .rec-grid { grid-template-columns: 1fr; }
+  .rec-tabs { flex-wrap: wrap; }
+  .rec-tab { font-size: 12px; padding: 6px 12px; }
+  .rec-tip-card { flex-direction: column; }
+}

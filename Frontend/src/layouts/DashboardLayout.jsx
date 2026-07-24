@@ -8,6 +8,7 @@ const navItems = [
   { to: '/dashboard/visualization', label: '3D Visualization', icon: 'cube' },
   { to: '/dashboard/progress', label: 'Progress', icon: 'trending' },
   { to: '/dashboard/recommendations', label: 'Recommendations', icon: 'bulb' },
+  { to: '/dashboard/Excersise', label: 'Excersise', icon:'clock'},
   { to: '/dashboard/history', label: 'History', icon: 'clock' },
   { to: '/dashboard/settings', label: 'Settings', icon: 'settings' },
 ]
@@ -28,6 +29,7 @@ const pageTitles = {
   '/dashboard/visualization': '3D Visualization',
   '/dashboard/progress': 'Progress Tracking',
   '/dashboard/recommendations': 'AI Recommendations',
+  '/dashboard/Excersise' : 'Excersise',
   '/dashboard/history': 'Analysis History',
   '/dashboard/settings': 'Settings',
 }
