@@ -2,23 +2,6 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import './FaceAnalyzer.css'
 import axios from "axios";
 
-const mockResults = {
-  symmetryScore: 87,
-  metrics: [
-    { label: 'Left/Right Balance', value: 85 },
-    { label: 'Eye Symmetry', value: 90 },
-    { label: 'Nose Symmetry', value: 88 },
-    { label: 'Mouth Symmetry', value: 82 },
-    { label: 'Chin & Jawline', value: 85 },
-  ],
-  recommendations: [
-    { title: 'Jaw Alignment Exercise', detail: '3 sets × 10 reps daily to improve chin symmetry.' },
-    { title: 'Eye Relaxation Drill', detail: '2 sets × 15 reps to balance eye muscles.' },
-    { title: 'Facial Massage', detail: '5 min daily focusing on the right side.' },
-  ],
-  landmarks: 68,
-}
-
 const states = {
   idle: { label: 'Upload a photo to begin', color: 'var(--text-muted)' },
   uploading: { label: 'Uploading image...', color: 'var(--info)' },
@@ -28,6 +11,7 @@ const states = {
 }
 
 export default function FaceAnalyzer() {
+
   const [status, setStatus] = useState("idle");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -38,17 +22,17 @@ export default function FaceAnalyzer() {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-  const savedAnalysis = localStorage.getItem("analysis");
-  const savedPreview = localStorage.getItem("preview");
-  const savedOverlay = localStorage.getItem("overlay_url");
+    const savedAnalysis = localStorage.getItem("analysis");
+    const savedPreview = localStorage.getItem("preview");
+    const savedOverlay = localStorage.getItem("overlay_url");
 
-  if (savedAnalysis) setAnalysis(JSON.parse(savedAnalysis));
-  if (savedPreview) setPreview(savedPreview);
+    if (savedAnalysis) setAnalysis(JSON.parse(savedAnalysis));
+    if (savedPreview) setPreview(savedPreview);
 
-  if (savedOverlay) {
-    localStorage.setItem("overlay_url", savedOverlay);
-  }
-}, []);
+    if (savedOverlay) {
+      localStorage.setItem("overlay_url", savedOverlay);
+    }
+  }, []);
 
   useEffect(() => {
     if (analysis) {
@@ -119,97 +103,47 @@ export default function FaceAnalyzer() {
       setStatus("analyzing");
       setProgress(50);
 
-      const res = await fetch('http://localhost:8000/api/analyze-generate/', {
-        method: 'POST',
-        body: formData,
-        signal: controller.signal,
-      })
-
-      clearTimeout(timeout)
-
-      if (!res.ok) throw new Error('Bad response')
-
-      const data = await res.json();
-      console.log(data);
-
-      const formattedResults = {
-
-        symmetryScore:
-          data.symmetry_analysis.overall_score,
-
-        landmarks: 468,
-
-        metrics: [
-
-          {
-            label: "Eyes",
-            value: data.symmetry_analysis.region_scores.eyes,
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/analyze-generate/",
+        formData,
+        {
+          headers: {
+            "Authorization": `Bearer ${access_token}`,
+            "Content-Type": "multipart/form-data",
           },
-
-          {
-            label: "Eyebrows",
-            value: data.symmetry_analysis.region_scores.eyebrows,
-          },
-
-          {
-            label: "Nose",
-            value: data.symmetry_analysis.region_scores.nose,
-          },
-
-          {
-            label: "Mouth",
-            value: data.symmetry_analysis.region_scores.mouth,
-          },
-
-          {
-            label: "Jaw",
-            value: data.symmetry_analysis.region_scores.jaw,
-          },
-
-        ],
-
-        recommendations:
-          data.recommendations,
-
-        heatmap:
-          data.symmetry_analysis.heatmap_image,
-
-        overlay:
-          data.symmetry_analysis.overlay_image,
-
-        model:
-          data.generated_model.glb_url,
-
-      }
-      localStorage.setItem(
-        "recommendations",
-        JSON.stringify(formattedResults.recommendations)
+        }
       );
+
+      setAnalysis(response.data);
 
       localStorage.setItem(
         "analysis",
-        JSON.stringify(formattedResults)
+        JSON.stringify(response.data)
       );
 
-      console.log("Saved analysis");
+      localStorage.setItem(
+        "overlay_url",
+        response.data.symmetry_analysis.overlay_image
+      );
 
-      setResults(formattedResults)
-      //     navigate("/recommendations", {
-      //       state: {
-      //         recommendations: formattedResults.recommendations,
-      //        symmetry: formattedResults,
-      //      },
-      //    });
-      setStatus('results')
-      setProgress(100)
-    } catch (err) {
-      console.warn('Backend unavailable, using mock data:', err.message)
-      setProgress(100)
-      setStatus('error')
-      setTimeout(() => {
-        setResults(mockResults)
-        setStatus('results')
-      }, 800)
+      localStorage.setItem(
+        "recommendations",
+        JSON.stringify(response.data.recommendations)
+      );
+
+      if (response.data.generated_model?.glb_url) {
+        localStorage.setItem(
+          "glb_url",
+          response.data.generated_model.glb_url
+        );
+      }
+
+      setStatus("results");
+      setProgress(100);
+
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
     }
   };
 
@@ -223,8 +157,8 @@ export default function FaceAnalyzer() {
     localStorage.removeItem("analysis");
     localStorage.removeItem("preview");
     localStorage.removeItem("overlay_url");
-    localStorage.removeItem("heatmap_url");
     localStorage.removeItem("glb_url");
+    localStorage.removeItem("recommendations");
   };
 
   const score = analysis?.symmetry_analysis?.overall_score || 0;
@@ -238,13 +172,12 @@ export default function FaceAnalyzer() {
       })
     )
     : [];
-  const heatmapUrl =
-    analysis?.symmetry_analysis?.heatmap_image ||
-    localStorage.getItem("heatmap_url");
 
   const overlayUrl =
     analysis?.symmetry_analysis?.overlay_image ||
     localStorage.getItem("overlay_url");
+
+  const recommendations = analysis?.recommendations || JSON.parse(localStorage.getItem("recommendations") || "[]");
 
   return (
     <div className="analyzer-page">
@@ -403,48 +336,16 @@ export default function FaceAnalyzer() {
             <div className="analyzer-card analyzer-recs">
               <h3>AI Recommendations</h3>
               <div className="analyzer-rec-list">
-                {mockResults.recommendations.map((r, i) => (
+                {recommendations.map((r, i) => (
                   <div className="analyzer-rec-item" key={i}>
                     <div className="analyzer-rec-icon">
-                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                      </svg>
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
                     </div>
-                    <div className="analyzer-rec-title">
-
-                      {r.title}
-
-                    </div>
-
-                    <div className="analyzer-rec-detail">
-
-                      {r.reason}
-
-                    </div>
-
-                    <div className="analyzer-rec-detail">
-
-                      <strong>Priority:</strong>
-
-                      {r.priority_label}
-
-                    </div>
-
-                    <div className="analyzer-rec-detail">
-
-                      <strong>Difficulty:</strong>
-
-                      {r.difficulty}
-
-                    </div>
-
-                    <div className="analyzer-rec-detail">
-
-                      <strong>Duration:</strong>
-
-                      {r.duration}
-
-                    </div>
+                    <div className="analyzer-rec-title">{r.title}</div>
+                    <div className="analyzer-rec-detail">{r.reason}</div>
+                    <div className="analyzer-rec-detail"><strong>Priority:</strong>{r.priority_label}</div>
+                    <div className="analyzer-rec-detail"><strong>Difficulty:</strong>{r.difficulty}</div>
+                    <div className="analyzer-rec-detail"><strong>Duration:</strong>{r.duration}</div>
                   </div>
                 ))}
               </div>
