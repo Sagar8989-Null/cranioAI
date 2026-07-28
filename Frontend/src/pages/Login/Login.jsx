@@ -74,14 +74,6 @@ export default function Login() {
       if (response.data.message === "Login Successful") {
         localStorage.setItem("isLoggedIn", "true")
 
-        // localStorage.setItem(
-        //   "user",
-        //   JSON.stringify({
-        //     username: response.data.username,
-        //     email: response.data.email,
-        //   })
-        // );
-
         if (rememberMe) {
           localStorage.setItem("access_token", response.data.access);
           localStorage.setItem("refresh_token", response.data.refresh);
@@ -112,7 +104,10 @@ export default function Login() {
   }
 
   return (
+
     <div className="login-page">
+
+      
       <div className="login-left">
         <img
           src={loginBg}
@@ -121,63 +116,50 @@ export default function Login() {
         />
 
         <div className="hero-content">
-          {/* <div className="hero-logo">
-            <img src={logo} alt="CranioAI Logo" />
-            <h2>Cranio<span>AI</span></h2>
-          </div> */}
 
-          <div className="hero-logo">
-            <h2>Cranio<span>AI</span></h2>
+          <div className="hero-logo"><h2>Cranio<span>AI</span></h2></div>
+
+          <div>
+            <div className="ai-badge"> AI-Powered </div>
+            <h1 className="hero-title"> Precision. <br /> <span>Symmetry.</span> <br /> Perfection.</h1>
+            <div className='hero-line'></div>
+            <p className='hero-description'>Advanced 3D facial analysis technology <br />for accurate insights and better outcomes.</p>
           </div>
 
-          <div className="ai-badge">
-            AI-Powered
-          </div>
-          <h1 className="hero-title">
-            Precision.
-            <br />
-            <span>Symmetry.</span>
-            <br />
-            Perfection.
-          </h1>
-          <div className='hero-line'></div>
-          <p className='hero-description'>
-            Advanced 3D facial analysis technology
-            <br />
-            for accurate insights and better outcomes.
-          </p>
+          <div style ={{'justify-items': "center" , width: "100%"}} >
+            <div className="feature-box">
+              <div className="feature">
+                <div className="icon">🛡️</div>
+                <h4>Secure & Private</h4>
+                <p>Your data is encrypted and protected</p>
+              </div>
 
-          <div className="feature-box">
+              <div className="divider"></div>
 
-            <div className="feature">
-              <div className="icon">🛡️</div>
-              <h4>Secure & Private</h4>
-              <p>Your data is encrypted and protected</p>
+              <div className="feature">
+                <div className="icon">🧠</div>
+                <h4>AI-Powered</h4>
+                <p>Advanced AI for precise symmetry analysis</p>
+              </div>
+
+              <div className="divider"></div>
+
+              <div className="feature">
+                <div className="icon">📦</div>
+                <h4>3D Visualization</h4>
+                <p>Detailed 3D insights and visual feedback</p>
+              </div>
+            </div>
+            <div className="trusted">
+              🛡️ Trusted by professionals. Built for accuracy.
             </div>
 
-            <div className="divider"></div>
-
-            <div className="feature">
-              <div className="icon">🧠</div>
-              <h4>AI-Powered</h4>
-              <p>Advanced AI for precise symmetry analysis</p>
-            </div>
-
-            <div className="divider"></div>
-
-            <div className="feature">
-              <div className="icon">📦</div>
-              <h4>3D Visualization</h4>
-              <p>Detailed 3D insights and visual feedback</p>
-            </div>
-
-          </div>
-
-          <div className="trusted">
-            🛡️ Trusted by professionals. Built for accuracy.
           </div>
         </div>
       </div>
+
+
+
       <div className="login-right">
         <div className="login-form-wrap">
           <h1 className="login-title">Welcome Back</h1>

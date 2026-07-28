@@ -54,91 +54,54 @@ export default function Signup() {
     // LEFT
     <div className="signup-page">
 
-      <div className="signup-left">
-        <div className="signup-brand">
-          Cranio<span>AI</span>
-        </div>
+      <div className="login-left">
         <img
           src={loginBg}
-          alt="AI Face"
-          className="signup-bg-image"
+          alt='Login Background'
+          className="login-bg-image"
         />
-        <div className="signup-overlay"></div>
-        <div className="signup-content">
-          <div className="signup-ai-badge">
-            AI-POWERED
+
+        <div className="hero-content">
+
+          <div className="hero-logo"><h2>Cranio<span>AI</span></h2></div>
+
+          <div>
+            <div className="ai-badge"> AI-Powered </div>
+            <h1 className="hero-title"> Precision. <br /> <span>Symmetry.</span> <br /> Perfection.</h1>
+            <div className='hero-line'></div>
+            <p className='hero-description'>Advanced 3D facial analysis technology <br />for accurate insights and better outcomes.</p>
           </div>
-          <h1 className="signup-hero-title">
-            Precision.
-            <br />
-            <span>Symmetry.</span>
-            <br />
-            Perfection.
-          </h1>
-          <p className="signup-hero-description">
-            Advanced 3D facial analysis technology
-            <br />
-            for accurate insights and better outcomes.
-          </p>
-          <div className="signup-trusted">
 
-            <span className="signup-trusted-icon">🛡️</span>
-
-            <span>
-              Trusted by professionals. Built for accuracy.
-            </span>
-          </div>
-          <div className="signup-features">
-
-            <div className="signup-feature-card">
-
-              <div className="signup-feature-icon">
-                🛡️
+          <div style={{ 'justify-items': "center", width: "100%" }} >
+            <div className="feature-box">
+              <div className="feature">
+                <div className="icon">🛡️</div>
+                <h4>Secure & Private</h4>
+                <p>Your data is encrypted and protected</p>
               </div>
 
-              <h3>Secure & Private</h3>
+              <div className="divider"></div>
 
-              <p>
-                Your data is encrypted and protected
-              </p>
+              <div className="feature">
+                <div className="icon">🧠</div>
+                <h4>AI-Powered</h4>
+                <p>Advanced AI for precise symmetry analysis</p>
+              </div>
 
+              <div className="divider"></div>
+
+              <div className="feature">
+                <div className="icon">📦</div>
+                <h4>3D Visualization</h4>
+                <p>Detailed 3D insights and visual feedback</p>
+              </div>
             </div>
-
-            <div className="signup-feature-card">
-
-              <div className="signup-feature-icon">
-                🧠
-              </div>
-
-              <h3>AI-Powered</h3>
-
-              <p>
-                Advanced AI for precise symmetry analysis
-              </p>
-
-            </div>
-
-            <div className="signup-feature-card">
-
-              <div className="signup-feature-icon">
-                📦
-              </div>
-
-              <h3>3D Visualization</h3>
-
-              <p>
-                Detailed 3D insights and visual feedback
-              </p>
-
+            <div className="trusted">
+              🛡️ Trusted by professionals. Built for accuracy.
             </div>
 
           </div>
         </div>
-
-
-
-
-        {/* Hero Content */}
       </div>
 
 
@@ -148,8 +111,9 @@ export default function Signup() {
 
         <div className="signup-form-wrap">
 
-          <h1 className="signup-title">Create Account</h1>
-          <p className="signup-subtitle">Get started with CranioAI in seconds</p>
+          <h1 className="signup-title">Create Account
+            <p className="signup-subtitle">Get started with CranioAI in seconds</p>
+          </h1>
 
           <form className="signup-form" onSubmit={handleSubmit}>
             <div className="signup-field">
@@ -207,9 +171,7 @@ export default function Signup() {
             </label>
             <button type="submit" className="signup-submit">Create Account</button>
           </form>
-
-          <div className="signup-divider"><span>or</span></div>
-
+          <div className="signup-divider">or</div>
           <button className="signup-google">
             <svg viewBox="0 0 24 24" width="20" height="20">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z" />
@@ -219,18 +181,12 @@ export default function Signup() {
             </svg>
             Sign up with Google
           </button>
-
           <p className="signup-login">
             Already have an account? <Link to="/login">Sign in</Link>
           </p>
         </div>
       </div>
     </div>
-
-
-
-
-
 
   )
 }

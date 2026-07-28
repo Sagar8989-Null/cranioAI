@@ -6,6 +6,7 @@ import logoImg from '../../assets/logo.png'
 import asymmetry from '../../assets/asymmetry.png'
 import symmetry from '../../assets/symmetry.png'
 import testimonial from '../../assets/testimonial.png'
+import curveline from '../../assets/curveline.png'
 import quote from '../../assets/quote.png'
 import arrowright from '../../assets/arrow-right-32.png'
 import arrowleft from '../../assets/arrow-back-32.png'
@@ -50,7 +51,8 @@ const iconPaths = {
 export default function Home() {
   // const [scrolled, setScrolled] = useState(false)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
-
+  const circumference = 2 * Math.PI * 52;
+  const offset = circumference - (87 / 100) * circumference;
   const nextTestimonial = () => {
     setActiveTestimonial((prev) =>
       prev === testimonials.length - 1 ? 0 : prev + 1
@@ -135,31 +137,59 @@ export default function Home() {
             <div className='home-float-cards' >
 
               <div className="home-float-card">
-                <div className="home-float-icon">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
-                </div>
-                <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }} >
+                  <div className="home-float-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+                  </div>
                   <div className="home-float-label">Symmetry Score</div>
-                  <div className="home-float-value">87%</div>
                 </div>
+                <div className="dash-score-ring">
+                  <svg viewBox="0 0 120 120" width="140" height="140">
+                    <circle cx="60" cy="60" r="52" fill="none" stroke="var(--border-light)" strokeWidth="10" />
+                    <circle
+                      cx="60" cy="60" r="52" fill="none"
+                      stroke="url(#scoreGrad)" strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={offset}
+                      transform="rotate(-90 60 60)"
+                    />
+                    <defs>
+                      <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="var(--primary-light)" />
+                        <stop offset="100%" stopColor="var(--accent)" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div className="dash-score-num">
+                    <span className="dash-score-pct">87%</span>
+                    <span className="dash-score-lbl">Symmetry</span>
+                  </div>
+                </div>
+                {/* <div className="home-float-value">87%</div> */}
               </div>
               <div className="home-float-card">
-                <div className="home-float-icon">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3v18M3 12h18" /></svg>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }} >
+                  <div className="home-float-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3v18M3 12h18" /></svg>
+                  </div>
+                  <div>
+                    <div className="home-float-label">Left/Right Balance</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="home-float-label">Left/Right Balance</div>
-                  <div className="home-float-value">85%</div>
-                </div>
+                <div className="home-float-value">85%</div>
+                <img src={curveline} alt="img" />
               </div>
               <div className="home-float-card">
-                <div className="home-float-icon">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }} >
+                  <div className="home-float-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>
+                  </div>
+                  <div>
+                    <div className="home-float-label">3D Face Model</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="home-float-label">3D Face Model</div>
-                  <div className="home-float-value">Ready</div>
-                </div>
+                <img src={symmetry} alt="img" />
               </div>
 
             </div>
@@ -232,7 +262,7 @@ export default function Home() {
             <div className="home-viz-face">
               <div className="home-viz-center">
                 <div className="home-viz-face">
-                  <FaceModel modelUrl={"/models/face.glb"}/>
+                  <FaceModel modelUrl={"/models/face.glb"} />
                 </div>
               </div>
             </div>
