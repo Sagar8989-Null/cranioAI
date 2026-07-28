@@ -26,16 +26,17 @@ export default function Dashboard() {
     return saved ? JSON.parse(saved) : null;
   });
 
-  const [preview, setPreview] = useState(
-    () => localStorage.getItem("preview") || null
-  );
+  // const [preview, setPreview] = useState(
+  //   () => localStorage.getItem("preview") || null
+  // );
 
+  
   useEffect(() => {
     refreshDashboard();
   }, []);
-
+  
   const [dashboardData, setDashboardData] = useState(null);
-
+  
   const refreshDashboard = async () => {
     try {
       const access_token = localStorage.getItem("access_token") || sessionStorage.getItem("access_token");
@@ -47,9 +48,9 @@ export default function Dashboard() {
           },
         }
       );
-
+      
       setDashboardData(response.data);
-
+      
       localStorage.setItem(
         "dashboardData",
         JSON.stringify(response.data)
@@ -58,8 +59,9 @@ export default function Dashboard() {
       console.error(error);
     }
   };
-
-  const score = analysis?.symmetry_analysis?.overall_score || 0;
+  
+  const latestAnalysis = dashboardData?.recent_uploads?.[0];
+  const score = latestAnalysis?.overall_score || 0;
   const circumference = 2 * Math.PI * 52;
   const offset = circumference - (score / 100) * circumference;
   const metrics = analysis
@@ -71,8 +73,9 @@ export default function Dashboard() {
     )
     : [];
 
-  const stats = dashboardData?.stats;
+  const latestImage = dashboardData?.recent_uploads?.[0]?.uploaded_image;
 
+  const stats = dashboardData?.stats;
   const averageSymmetry = stats?.average_score?.toFixed(1) || "0.0";
   const bestScore = stats?.best_score?.toFixed(1) || "0.0";
   const totalUploads = stats?.total_uploads || 0;
@@ -95,6 +98,8 @@ export default function Dashboard() {
     { label: "Best Score", value: `${bestScore}%`, icon: "trophy", trend: "All Time", },
     // { label: "Face Age", value: "23", icon: "clock", trend: "Estimated", },
   ];
+
+  console.log("Dashboard Data:", dashboardData);
 
   return (
     <div className="dash-page">
@@ -123,8 +128,8 @@ export default function Dashboard() {
             <h3>Recent Analysis</h3>
           </div>
           <div className="dash-preview-img">
-            {preview ? (
-              <img src={preview} alt="Preview" className="preview-image" />
+            {dashboardData ? (
+              <img src={`http://127.0.0.1:8000${latestImage}`} alt="Preview" className="preview-image" />
             ) : (
               <svg viewBox="0 0 100 120" width="100%" height="100%">
                 <ellipse cx="50" cy="60" rx="35" ry="50" fill="none" stroke="var(--border)" strokeWidth="1.5" />

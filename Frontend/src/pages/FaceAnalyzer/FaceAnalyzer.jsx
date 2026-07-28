@@ -15,36 +15,37 @@ export default function FaceAnalyzer() {
   const [status, setStatus] = useState("idle");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [analysis, setAnalysis] = useState(null);
 
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    const savedAnalysis = localStorage.getItem("analysis");
-    const savedPreview = localStorage.getItem("preview");
-    const savedOverlay = localStorage.getItem("overlay_url");
+  // useEffect(() => {
+  //   const savedAnalysis = localStorage.getItem("analysis");
+  //   const savedPreview = localStorage.getItem("preview");
+  //   const savedOverlay = localStorage.getItem("overlay_url");
 
-    if (savedAnalysis) setAnalysis(JSON.parse(savedAnalysis));
-    if (savedPreview) setPreview(savedPreview);
+  //   if (savedAnalysis) setAnalysis(JSON.parse(savedAnalysis));
+  //   if (savedPreview) setPreview(savedPreview);
+  //   if (savedOverlay) setOverlay(savedOverlay);
 
-    if (savedOverlay) {
-      localStorage.setItem("overlay_url", savedOverlay);
-    }
-  }, []);
+  //   // if (savedOverlay) {
+  //     // sessionStorage.setItem("overlay_url", savedOverlay);
+  //   // }
+  // }, []);
 
   useEffect(() => {
     if (analysis) {
-      localStorage.setItem("analysis", JSON.stringify(analysis));
+      sessionStorage.setItem("analysis", JSON.stringify(analysis));
     }
   }, [analysis]);
 
-  useEffect(() => {
-    if (preview) {
-      localStorage.setItem("preview", preview);
-    }
-  }, [preview]);
+  // useEffect(() => {
+  //   if (preview) {
+  //     sessionStorage.setItem("preview", preview);
+  //   }
+  // }, [preview]);
 
   const fileToBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -65,11 +66,12 @@ export default function FaceAnalyzer() {
 
     setAnalysis(null);
     setProgress(0);
+    setOverlay(null);
     setStatus("idle");
 
-    localStorage.removeItem("analysis");
-    localStorage.removeItem("overlay_url");
-    localStorage.removeItem("glb_url");
+    sessionStorage.removeItem("analysis");
+    // sessionStorage.removeItem("overlay_url");
+    sessionStorage.removeItem("glb_url");
   }, []);
 
   const onDrop = useCallback((e) => {
@@ -115,15 +117,11 @@ export default function FaceAnalyzer() {
       );
 
       setAnalysis(response.data);
+      setOverlay(response.data.symmetry_analysis.overlay_image);
 
       localStorage.setItem(
         "analysis",
         JSON.stringify(response.data)
-      );
-
-      localStorage.setItem(
-        "overlay_url",
-        response.data.symmetry_analysis.overlay_image
       );
 
       localStorage.setItem(
@@ -151,12 +149,13 @@ export default function FaceAnalyzer() {
     setImage(null);
     setPreview(null);
     setAnalysis(null);
+    setOverlay(null);
     setStatus("idle");
     setProgress(0);
 
     localStorage.removeItem("analysis");
-    localStorage.removeItem("preview");
-    localStorage.removeItem("overlay_url");
+    // localStorage.removeItem("preview");
+    // localStorage.removeItem("overlay_url");
     localStorage.removeItem("glb_url");
     localStorage.removeItem("recommendations");
   };
@@ -173,11 +172,11 @@ export default function FaceAnalyzer() {
     )
     : [];
 
-  const overlayUrl =
-    analysis?.symmetry_analysis?.overlay_image ||
-    localStorage.getItem("overlay_url");
+  // const overlayUrl =
+  //   analysis?.symmetry_analysis?.overlay_image ||
+  //   sessionStorage.getItem("overlay_url");
 
-  const recommendations = analysis?.recommendations || JSON.parse(localStorage.getItem("recommendations") || "[]");
+  const recommendations = analysis?.recommendations || JSON.parse(sessionStorage.getItem("recommendations") || "[]");
 
   return (
     <div className="analyzer-page">
@@ -305,7 +304,7 @@ export default function FaceAnalyzer() {
             <div className="analyzer-card analyzer-original">
               <h3>Overlay Image</h3>
               <div className="analyzer-img-wrap">
-                <img src={overlayUrl} alt="Overlay" />
+                <img src={analysis?.symmetry_analysis?.overlay_image} alt="Overlay" />
                 <div className="analyzer-scan-overlay" />
               </div>
             </div>
