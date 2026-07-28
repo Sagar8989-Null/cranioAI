@@ -2,6 +2,7 @@ import { Outlet, NavLink, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import './DashboardLayout.css'
 import { useNavigate } from "react-router-dom";
+import { PiSignOutBold } from "react-icons/pi";
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid', end: true },
@@ -9,7 +10,6 @@ const navItems = [
   { to: '/dashboard/visualization', label: '3D Visualization', icon: 'cube' },
   { to: '/dashboard/progress', label: 'Progress', icon: 'trending' },
   { to: '/dashboard/recommendations', label: 'Recommendations', icon: 'bulb' },
-  { to: '/dashboard/Excersise', label: 'Excersise', icon: 'clock' },
   { to: '/dashboard/history', label: 'History', icon: 'clock' },
   { to: '/dashboard/settings', label: 'Settings', icon: 'settings' },
 ]
@@ -30,7 +30,6 @@ const pageTitles = {
   '/dashboard/visualization': '3D Visualization',
   '/dashboard/progress': 'Progress Tracking',
   '/dashboard/recommendations': 'AI Recommendations',
-  '/dashboard/Excersise': 'Excersise',
   '/dashboard/history': 'Analysis History',
   '/dashboard/settings': 'Settings',
 }
@@ -104,8 +103,7 @@ export default function DashboardLayout() {
               {/* <div className="dash-avatar sm">{user.username.slice(0, 1)}</div> */}
               <img src={`http://127.0.0.1:8000/${user.profile_image}`} alt="" className='dash-avatar sm' />
               <span className="dash-topbar-name">{user.username}</span>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6" /></svg>
-              <div className="logout" onClick={handleLogout}>Logout</div>
+              <PiSignOutBold onClick={handleLogout}/>
             </div>
           </div>
         </header>

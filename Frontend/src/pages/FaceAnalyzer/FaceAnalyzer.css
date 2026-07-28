@@ -310,8 +310,7 @@
 }
 
 .analyzer-results-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 20px;
 }
 
@@ -443,6 +442,7 @@
   padding: 12px;
   border-radius: var(--radius-md);
   background: var(--bg-main);
+  align-items: center
 }
 
 .analyzer-rec-icon {

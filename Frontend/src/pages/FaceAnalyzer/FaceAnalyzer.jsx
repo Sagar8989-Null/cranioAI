@@ -46,7 +46,6 @@ export default function FaceAnalyzer() {
 
     setAnalysis(null);
     setProgress(0);
-    setOverlay(null);
     setStatus("idle");
 
     sessionStorage.removeItem("analysis");
@@ -96,7 +95,6 @@ export default function FaceAnalyzer() {
       );
 
       setAnalysis(response.data);
-      setOverlay(response.data.symmetry_analysis.overlay_image);
 
       localStorage.setItem(
         "analysis",
@@ -128,7 +126,6 @@ export default function FaceAnalyzer() {
     setImage(null);
     setPreview(null);
     setAnalysis(null);
-    setOverlay(null);
     setStatus("idle");
     setProgress(0);
 
@@ -224,10 +221,8 @@ export default function FaceAnalyzer() {
             >
               {status === 'uploading' || status === 'analyzing' ? (
                 <>
-                  <span className="analyzer-spinner" />
-                  Analyzing...
-                </>
-              ) : (
+                  <span className="analyzer-spinner" /> Analyzing... </> 
+                  ) : (
                 <>
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10" />
@@ -314,10 +309,10 @@ export default function FaceAnalyzer() {
                       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
                     </div>
                     <div className="analyzer-rec-title">{r.title}</div>
-                    <div className="analyzer-rec-detail">{r.reason}</div>
+                    {/* <div className="analyzer-rec-detail">{r.reason}</div>
                     <div className="analyzer-rec-detail"><strong>Priority:</strong>{r.priority_label}</div>
                     <div className="analyzer-rec-detail"><strong>Difficulty:</strong>{r.difficulty}</div>
-                    <div className="analyzer-rec-detail"><strong>Duration:</strong>{r.duration}</div>
+                    <div className="analyzer-rec-detail"><strong>Duration:</strong>{r.duration}</div> */}
                   </div>
                 ))}
               </div>
