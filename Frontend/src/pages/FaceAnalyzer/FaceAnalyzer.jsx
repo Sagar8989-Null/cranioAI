@@ -21,31 +21,11 @@ export default function FaceAnalyzer() {
 
   const fileInputRef = useRef(null);
 
-  // useEffect(() => {
-  //   const savedAnalysis = localStorage.getItem("analysis");
-  //   const savedPreview = localStorage.getItem("preview");
-  //   const savedOverlay = localStorage.getItem("overlay_url");
-
-  //   if (savedAnalysis) setAnalysis(JSON.parse(savedAnalysis));
-  //   if (savedPreview) setPreview(savedPreview);
-  //   if (savedOverlay) setOverlay(savedOverlay);
-
-  //   // if (savedOverlay) {
-  //     // sessionStorage.setItem("overlay_url", savedOverlay);
-  //   // }
-  // }, []);
-
   useEffect(() => {
     if (analysis) {
       sessionStorage.setItem("analysis", JSON.stringify(analysis));
     }
   }, [analysis]);
-
-  // useEffect(() => {
-  //   if (preview) {
-  //     sessionStorage.setItem("preview", preview);
-  //   }
-  // }, [preview]);
 
   const fileToBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -70,7 +50,6 @@ export default function FaceAnalyzer() {
     setStatus("idle");
 
     sessionStorage.removeItem("analysis");
-    // sessionStorage.removeItem("overlay_url");
     sessionStorage.removeItem("glb_url");
   }, []);
 
@@ -154,8 +133,6 @@ export default function FaceAnalyzer() {
     setProgress(0);
 
     localStorage.removeItem("analysis");
-    // localStorage.removeItem("preview");
-    // localStorage.removeItem("overlay_url");
     localStorage.removeItem("glb_url");
     localStorage.removeItem("recommendations");
   };
@@ -171,10 +148,6 @@ export default function FaceAnalyzer() {
       })
     )
     : [];
-
-  // const overlayUrl =
-  //   analysis?.symmetry_analysis?.overlay_image ||
-  //   sessionStorage.getItem("overlay_url");
 
   const recommendations = analysis?.recommendations || JSON.parse(sessionStorage.getItem("recommendations") || "[]");
 

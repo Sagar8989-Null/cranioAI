@@ -23,6 +23,7 @@ db.sqlite3
 media/uploads/
 media/generated_images/
 media/generated_models/
+media/profile_images/
 
 # 3D Models
 *.glb

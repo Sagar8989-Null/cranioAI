@@ -119,51 +119,6 @@ class SymmetryAnalyzer:
 
         )
 
-    # ------------------------------
-
-    # def analyze(self, landmarks):
-
-    #     mid_x = self.midline(landmarks)
-
-    #     region_errors = {}
-
-    #     for region,pairs in self.regions.items():
-
-    #         region_errors[region]=self.region_error(
-
-    #             landmarks,
-
-    #             pairs,
-
-    #             mid_x
-
-    #         )
-
-    #     shape_errors=self.shape_errors(
-
-    #         landmarks,
-
-    #         mid_x
-
-    #     )
-
-    #     pair_errors = self.pair_errors(
-    #         landmarks,
-    #         mid_x
-    #     )   
-
-    #     return{
-
-    #         "midline":mid_x,
-
-    #         "distance_errors":region_errors,
-
-    #         "shape_errors":shape_errors,
-
-    #         "pair_errors": pair_errors
-
-    #     }
-
     def analyze(self, landmarks, normalize=False):
 
         if normalize:

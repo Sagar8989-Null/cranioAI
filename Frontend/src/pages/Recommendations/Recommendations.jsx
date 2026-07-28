@@ -26,6 +26,9 @@ export default function Recommendations() {
 
   const exercises = storedRecommendations;
 
+  console.log("Stored Recommendations:", storedRecommendations);
+  console.log("Stored Analysis:", storedAnalysis);
+
   if (exercises.length === 0) {
     return (
       <div
@@ -91,14 +94,14 @@ export default function Recommendations() {
                 .toLowerCase()
                 .replace(" ", "-")}`}
             >
-              {ex.priority_label}
+              Priority : {ex.priority_label}
             </span>
             <p className="rec-card-desc">
               {ex.description}
             </p>
-            <div className="rec-score">
+            {/* <div className="rec-score">
               <strong>Priority:</strong> {Math.round(ex.priority)}%
-            </div>
+            </div> */}
             <div className="rec-card-meta">
               <div className="rec-meta-item">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>

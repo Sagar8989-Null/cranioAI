@@ -40,13 +40,15 @@ export default function DashboardLayout() {
   const location = useLocation()
   const title = pageTitles[location.pathname] || 'Dashboard'
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const user = JSON.parse(localStorage.getItem("user"));
+  const dashboardData = JSON.parse(localStorage.getItem("dashboardData") || "{}");
+  const user = dashboardData.user || {};
+
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user");
 
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
@@ -83,26 +85,6 @@ export default function DashboardLayout() {
             </NavLink>
           ))}
         </nav>
-
-        {/* <div className="dash-sidebar-bottom">
-          <div className="dash-upgrade-card">
-            <div className="dash-upgrade-icon">
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m12 2 2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z" /></svg>
-            </div>
-            <h4>Upgrade to Pro</h4>
-            <p>Unlock advanced 3D analysis & unlimited scans</p>
-            <button className="dash-upgrade-btn">Upgrade Now</button>
-          </div>
-
-          <div className="dash-user-profile">
-            <div className="dash-avatar">{user.username.slice(0, 1)}</div>
-            <div className="dash-user-info">
-              <div className="dash-user-name">{user.username}</div>
-              <div className="dash-user-badge">Premium</div>
-              <div className="dash-user-since">Member since May 2024</div>
-            </div>
-          </div>
-        </div> */}
       </aside>
 
       {sidebarOpen && <div className="dash-overlay" onClick={() => setSidebarOpen(false)} />}
@@ -119,7 +101,8 @@ export default function DashboardLayout() {
               <span className="dash-notif-dot"></span>
             </button>
             <div className="dash-topbar-user">
-              <div className="dash-avatar sm">{user.username.slice(0, 1)}</div>
+              {/* <div className="dash-avatar sm">{user.username.slice(0, 1)}</div> */}
+              <img src={`http://127.0.0.1:8000/${user.profile_image}`} alt="" className='dash-avatar sm' />
               <span className="dash-topbar-name">{user.username}</span>
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6" /></svg>
               <div className="logout" onClick={handleLogout}>Logout</div>

@@ -34,14 +34,6 @@ export default function Login() {
       localStorage.setItem("access_token", response.data.access);
       localStorage.setItem("refresh_token", response.data.refresh);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          username: response.data.username,
-          email: response.data.email,
-        })
-      );
-
       navigate("/dashboard");
     },
 
@@ -82,13 +74,13 @@ export default function Login() {
       if (response.data.message === "Login Successful") {
         localStorage.setItem("isLoggedIn", "true")
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            username: response.data.username,
-            email: response.data.email,
-          })
-        );
+        // localStorage.setItem(
+        //   "user",
+        //   JSON.stringify({
+        //     username: response.data.username,
+        //     email: response.data.email,
+        //   })
+        // );
 
         if (rememberMe) {
           localStorage.setItem("access_token", response.data.access);

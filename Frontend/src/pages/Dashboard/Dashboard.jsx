@@ -26,11 +26,6 @@ export default function Dashboard() {
     return saved ? JSON.parse(saved) : null;
   });
 
-  // const [preview, setPreview] = useState(
-  //   () => localStorage.getItem("preview") || null
-  // );
-
-  
   useEffect(() => {
     refreshDashboard();
   }, []);
@@ -96,10 +91,8 @@ export default function Dashboard() {
     { label: "Average Symmetry", value: `${averageSymmetry}%`, icon: "symmetry", trend: `${totalUploads} Total Analyses`, },
     { label: "This Month", value: currentMonthUploads, icon: "scan", trend: "Current Month", },
     { label: "Best Score", value: `${bestScore}%`, icon: "trophy", trend: "All Time", },
-    // { label: "Face Age", value: "23", icon: "clock", trend: "Estimated", },
   ];
 
-  console.log("Dashboard Data:", dashboardData);
 
   return (
     <div className="dash-page">

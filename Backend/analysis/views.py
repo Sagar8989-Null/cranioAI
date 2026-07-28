@@ -33,13 +33,17 @@ class DashboardAPIView(APIView):
             for item in history.order_by("created_at")
         ]
 
-        profile = UserProfile.objects.get(user=request.user)
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
 
         return Response({
             "user":{
                 "username":request.user.username,
                 "email":request.user.email,
-                "profile_image":profile.profile_image.url if profile.profile_image else None
+                "profile_image":profile.profile_image.url if profile.profile_image else None,
+                "full_name": profile.full_name,
+                "phone_number": profile.phone_number,
+                "location": profile.location,
+                "about": profile.about,
             },
 
             "stats":{

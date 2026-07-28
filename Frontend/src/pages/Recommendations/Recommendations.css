@@ -205,30 +205,30 @@
 
 .priority-badge {
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 999px;
+  /* padding: 6px 14px; */
+  /* border-radius: 999px; */
   font-size: 12px;
   font-weight: 600;
   margin: 8px 0;
 }
 
 .priority-badge.low {
-  background: #ecfdf5;
+  /* background: #ecfdf5; */
   color: #15803d;
 }
 
 .priority-badge.medium {
-  background: #fef3c7;
+  /* background: #fef3c7; */
   color: #b45309;
 }
 
 .priority-badge.high {
-  background: #fee2e2;
+  /* background: #fee2e2; */
   color: #b91c1c;
 }
 
 .priority-badge.very-high {
-  background: #fecaca;
+  /* background: #fecaca; */
   color: #991b1b;
 }
 
